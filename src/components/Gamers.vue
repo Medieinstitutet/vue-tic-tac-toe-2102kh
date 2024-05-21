@@ -21,12 +21,12 @@ defineProps<GamerProps>()
 </script>
 <template>
    <AddPlayer @add="addPlayer"/>
-   <ul>
+   <!-- <ul>
     <PlayerPresentation v-for="(player,i) in players"
      :player="player"
      :i="i"
      ></PlayerPresentation>
-   </ul>
+   </ul> -->
    
 </template>
 <style scoped></style>

@@ -6,11 +6,19 @@ interface ButtonProps {
 }
 defineProps<ButtonProps>()
 
- const emit= defineEmits<{
-     (e:"onClick"
-    ):void;}>()
+ defineEmits<{
+     (e:"onClick"):void;}>();
 </script>
+
 <template>
     <button :title="title" @click="$emit('onClick')">{{ buttonText }}</button>
 </template>
-<style scoped></style>
+
+<style scoped>
+button{
+    border: none;
+    border-radius: 5px;
+    background-color: blueviolet;
+    padding: 1rem;
+}
+</style>
