@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import Gamers from './components/Gamers.vue';
-import { Gamer } from './models/Gamer';
-const state =ref<Gamer[]>([])
+
+// const state =ref<Players[]>([])
+
+  
 </script>
 
 <template>
   <Gamers/>
+  <AddPlayer/>
 </template>
 
 <style scoped>

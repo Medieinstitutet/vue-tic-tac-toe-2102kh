@@ -1,30 +1,32 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Gamer } from '../models/Gamer';
-//import { Gamer } from '../models/Gamer';
+import { Player } from '../models/Player';
+import AddPlayer from './AddPlayer.vue';
+import PlayerPresentation from './PlayerPresentation.vue';
 
-const userInput =ref("");
-const xPlayer = "X-SPELARE";
-const oPlayer ="O-SPELARE"
+const players=ref<Player[]>([]);
+
+const addPlayer =(text:string)=>{
+    players.value.push(new Player(text))
+
+}
+//const userInput =ref("");
 interface GamerProps{
-    gamers:Gamer[]
+    players:Player[]
 }
 defineProps<GamerProps>()
 
-    const handleSubmit=()=>{
-        userInput.value = "";
-    }
+   
 
 </script>
 <template>
+   <AddPlayer @add="addPlayer"/>
+   <ul>
+    <PlayerPresentation v-for="(player,i) in players"
+     :player="player"
+     :i="i"
+     ></PlayerPresentation>
+   </ul>
    
-    <span v-if= "gamers.length==0 ">{{ xPlayer }}</span>
-    <span v-else>{{ oPlayer }}</span>
-
-    <form @submit.prevent="handleSubmit">
-        <input type="text" v-model="userInput" >
-        <button>Börja spela spel</button>
-
-    </form>
 </template>
 <style scoped></style>

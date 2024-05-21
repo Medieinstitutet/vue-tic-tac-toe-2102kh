@@ -1,5 +1,8 @@
+import { Player } from "./Player";
+
 export class Players {
     constructor(
-        public players: Players[]
-    );
+        public players: Player[],
+        //public showHistory:true
+    ) {}
 }
