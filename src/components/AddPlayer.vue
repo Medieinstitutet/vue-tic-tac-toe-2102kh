@@ -3,35 +3,21 @@
 import { ref } from 'vue';
 import { Player } from '../models/Player';
 
-
-// Reactive references
 const userInput = ref("");
-const players = ref<Player[]>([]);
+// const players = ref<Player[]>([]);
 const oPlayer = "O-SPELARE";
 const xPlayer = "X-SPELARE";
 
-// Handle form submission to add players
-const handleSubmit = () => {
-  if (userInput.value !== "" && players.value.length < 2) {
-    const playerName =userInput.value;
-    // const playerName = players.value.length === 0 ? xPlayer : oPlayer;
-    const point= 0;
-    const turn = players.value.length=== 0;
+defineProps<{players: Player[]}>();
 
-    players.value.push(new Player(playerName,point, turn));
-    userInput.value = "";
-    console.log(playerName);
-    
-  }
+const emit = defineEmits<{
+  (e: "addPlayer", name: string): void;
+}>();
+
+const handleSubmit = () => {
+  emit("addPlayer", userInput.value);
+  userInput.value = "";
 };
-const startGame=()=>{
-    
- console.log("Spelet har påbörjat")
-    }
-    const handleSave=()=>{
-      console.log("Spara någonting");
-      
-    }
 
 </script>
 <template>
@@ -58,7 +44,7 @@ const startGame=()=>{
        </li>
       </ul>
     </span>
-    <button v-if="players.length==2" @click="startGame" class="start-button">Börja spela spel</button>
+    
   </div>
   </template>
 
