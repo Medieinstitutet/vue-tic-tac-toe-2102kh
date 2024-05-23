@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Player } from '../models/Player';
+import RestartGame from './RestartGame.vue';
 
 
 
@@ -29,6 +30,7 @@ const state = ref<SquareProps>({
     gameOver:false
 });
 const message = ref(`Du startar spelet, ${props.players[0].playerName}`)
+const winningSquares = ref<number[]>([]);
 
 const winLines = [
   [0, 1, 2],
@@ -64,6 +66,7 @@ const checkWinner=()=>{
     for (let i =0; i < winLines.length; i++){
      const[a,b,c]=winLines[i];
      if(state.value.values[a] && state.value.values[a] === state.value.values[b] && state.value.values[a]===state.value.values[c]){
+        winningSquares.value = [a, b, c];
         return state.value.values[a]
      }
     }
@@ -74,30 +77,42 @@ const checkWinner=()=>{
 }
 
 const handleGameOver =(winner:string | null)=>{
-    
     state.value.gameOver=true;
-
-    
-if(winner){
+    if(winner){
     message.value=`Grattis!${winner}vinner spelet!`;
-    
-}else{
-   
-    message.value='Oavgjört!';
+    }else{
+   message.value='Oavgjört!';
 }
-   
 }
-
+const restartGame = () => {
+  state.value = {
+    values: ['', '', '', '', '', '', '', '', ''],
+    currentPlayer: props.players[0],
+    turn: true,
+    gameOver: false
+  };
+  winningSquares.value = [];
+  message.value = `Du startar spelet, ${props.players[0].playerName}`;
+};
 
 </script>
 
 <template> 
+<div>
 <h3>{{ message }}</h3>
 <div class="square">
-      <div v-for="(value, i) in state?.values" class="square-item" @click="() => handleClick(i)" >{{ value }}</div>
+      <div v-for="(value, i) in state?.values"
+      :key="i"
+      class="square-item" 
+      @click="() => handleClick(i)" 
+      :class="{'winner':winningSquares.includes(i)}">
+      {{ value }}
+    </div>
 </div>
+<RestartGame @restart="restartGame"/>
 <div>
     <CheckWinner ref="CheckWinnerRef" :values="state.values" @game-over="handleGameOver"/>
+</div>
 </div>
 
 </template>
@@ -120,8 +135,10 @@ background-color: rgb(190, 217, 217);
 display:flex;
 align-items: center;
 justify-content: center;
-font-size: 6rem;
-    
+font-size: 6rem;    
+}
+.square-item .winner {
+text-color:red
 }
 </style>
 
