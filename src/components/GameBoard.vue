@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { Player } from '../models/Player';
 import RestartGame from './RestartGame.vue';
+import GameHistory from './GameHistory.vue';
 
 
 
@@ -31,7 +32,8 @@ const state = ref<SquareProps>({
 });
 const message = ref(`Du startar spelet, ${props.players[0].playerName}`)
 const winningSquares = ref<number[]>([]);
-
+const gameHistory =ref<string[]>([]);
+const playerScores = ref({ [props.players[0].playerName]: 0, [props.players[1].playerName]: 0 });
 const winLines = [
   [0, 1, 2],
   [3, 4, 5],
@@ -64,7 +66,9 @@ const handleClick = (index:number) => {
 const checkWinner=()=>{
     for (let i =0; i < winLines.length; i++){
      const[a,b,c]=winLines[i];
-     if(state.value.values[a] && state.value.values[a] === state.value.values[b] && state.value.values[a]===state.value.values[c]){
+     if(state.value.values[a] && 
+     state.value.values[a] === state.value.values[b] &&
+      state.value.values[a]===state.value.values[c]){
         winningSquares.value = [a, b, c];
         return state.value.values[a]
      }
@@ -78,11 +82,13 @@ const checkWinner=()=>{
 const handleGameOver =(winner:string | null)=>{
     state.value.gameOver=true;
     if(winner){
-     const winningPlayer=winner==='X' ? props.players[0].playerName : props.players[1].playerName;
-    
+    const winningPlayer=winner==='X' ? props.players[0].playerName : props.players[1].playerName;
     message.value=`Grattis! ${winningPlayer} vinner spelet!`;
+    playerScores.value[winningPlayer]++;
+    gameHistory.value.push(`Vinnare ${winningPlayer} (Poäng: ${playerScores.value[winningPlayer]})`);
     }else{
    message.value='Oavgjört!';
+   gameHistory.value.push('Spelet slutade oavgjort!')
 }
 }
 const restartGame = () => {
@@ -104,15 +110,16 @@ const restartGame = () => {
 <div class="square">
       <div v-for="(value, i) in state?.values"
       :key="i"
-      class="square-item" 
-      @click="() => handleClick(i)" 
-      :class="{'winner':winningSquares.includes(i)}">
+      @click="handleClick(i)" 
+      :class="['square-item',{'winner':winningSquares.includes(i)}]"
+      >
       {{ value }}
     </div>
 </div>
 <RestartGame @restart="restartGame"/>
+<GameHistory :history="gameHistory"/>
 <div>
-    <CheckWinner ref="CheckWinnerRef" :values="state.values" @game-over="handleGameOver"/>
+
 </div>
 </div>
 
