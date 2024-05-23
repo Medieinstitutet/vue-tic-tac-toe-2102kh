@@ -43,7 +43,6 @@ const winLines = [
   [2, 5, 8]
 ];
 
-
 const handleClick = (index:number) => {
     if(state.value.values[index]=== "" && !state.value.gameOver){
         if(state.value.currentPlayer === props.players[0]) {
@@ -79,7 +78,9 @@ const checkWinner=()=>{
 const handleGameOver =(winner:string | null)=>{
     state.value.gameOver=true;
     if(winner){
-    message.value=`Grattis!${winner}vinner spelet!`;
+     const winningPlayer=winner==='X' ? props.players[0].playerName : props.players[1].playerName;
+    
+    message.value=`Grattis! ${winningPlayer} vinner spelet!`;
     }else{
    message.value='Oavgjört!';
 }
@@ -128,17 +129,20 @@ const restartGame = () => {
 }
 .square-item{
 
-min-width: 33%;
-min-height: 250px;
-border:1px solid black;
-background-color: rgb(190, 217, 217);
+min-width: 30%;
+min-height: 210px;
+border:1px solid rgb(20, 1, 1);
+background-color: rgb(247, 252, 180);
 display:flex;
 align-items: center;
 justify-content: center;
-font-size: 6rem;    
+font-size: 6rem;  
+color: blue;  
+border-radius: 5%;
+margin: 0.1rem;
 }
-.square-item .winner {
-text-color:red
+.square-item.winner {
+color:red
 }
 </style>
 

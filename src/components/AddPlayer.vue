@@ -57,7 +57,7 @@ section{
     text-align: center;
     margin-bottom: 20px;
     padding: 10px 25px;
-    background-color: rgb(249, 249, 24);
+    background-color:rgb(247, 252, 180);;
 }
 .player-form{
     display: flex;
@@ -79,15 +79,18 @@ section{
   align-items: center;
   justify-content: space-between;
 }
-.save-button, .start-button{
+.save-button{
 padding: 10px 20px;
 border: none;
 border-radius: 5px;
-background-color: #007BFF;
+background-color:#4CAF50;;
 color: white;
 font-size: 16px;
 cursor: pointer;
 transition: background-color 0.3s;
+}
+.save-button:hover {
+ background-color: #45a049;
 }
 
 </style>  
