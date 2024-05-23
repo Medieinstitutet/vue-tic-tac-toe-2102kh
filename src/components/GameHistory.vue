@@ -1,10 +1,8 @@
 <script setup lang="ts">
-
 interface gameHistoryProps{
     history:string[]
 }
-const props = defineProps<gameHistoryProps>()
-
+defineProps<gameHistoryProps>()
 
 </script>
 <template>

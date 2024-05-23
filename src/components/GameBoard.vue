@@ -57,12 +57,14 @@ const handleClick = (index:number) => {
             message.value =`Nu är det din tur, ${props.players[0].playerName}`;
         }       
     const winner = checkWinner();
-    if(winner){
-    state.value.gameOver =true;
-    handleGameOver(winner === 'Oavgjort' ? null : winner);   
+    if(winner !==null){
+    state.value.gameOver = true;
+    handleGameOver(winner);   
+   
+    }
 }
 }
-}
+
 const checkWinner=()=>{
     for (let i =0; i < winLines.length; i++){
      const[a,b,c]=winLines[i];
@@ -74,19 +76,20 @@ const checkWinner=()=>{
      }
     }
     if(!state.value.values.includes('')){
-        return 'Oavgjort!'
+        return 'draw';
     }
     return null;
 }
 
 const handleGameOver =(winner:string | null)=>{
     state.value.gameOver=true;
-    if(winner){
+    
+    if(winner &&winner !='draw'){
     const winningPlayer=winner==='X' ? props.players[0].playerName : props.players[1].playerName;
     message.value=`Grattis! ${winningPlayer} vinner spelet!`;
     playerScores.value[winningPlayer]++;
     gameHistory.value.push(`Vinnare ${winningPlayer} (Poäng: ${playerScores.value[winningPlayer]})`);
-    }else{
+    }else if (winner==='draw'){
    message.value='Oavgjört!';
    gameHistory.value.push('Spelet slutade oavgjort!')
 }
@@ -108,9 +111,9 @@ const restartGame = () => {
 <div>
 <h3>{{ message }}</h3>
 <div class="square">
-      <div v-for="(value, i) in state?.values"
+      <div v-for="(value, i) in state.values"
       :key="i"
-      @click="handleClick(i)" 
+      @click="()=> handleClick(i)" 
       :class="['square-item',{'winner':winningSquares.includes(i)}]"
       >
       {{ value }}
@@ -118,15 +121,9 @@ const restartGame = () => {
 </div>
 <RestartGame @restart="restartGame"/>
 <GameHistory :history="gameHistory"/>
-<div>
-
-</div>
 </div>
 
 </template>
-
-    
-
 <style scoped>
 .square{
     min-width:90vw;
@@ -135,7 +132,6 @@ const restartGame = () => {
     flex-wrap: wrap;
 }
 .square-item{
-
 min-width: 30%;
 min-height: 210px;
 border:1px solid rgb(20, 1, 1);
