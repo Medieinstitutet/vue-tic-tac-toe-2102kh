@@ -11,7 +11,8 @@ defineEmits<{
 }>();
 
 interface GameProps{
-    players:Player[]
+    players:Player[];
+    gameHistory:string[];
     
 }
 const props = defineProps<GameProps>()
@@ -90,7 +91,7 @@ const handleGameOver =(winner:string | null)=>{
     playerScores.value[winningPlayer]++;
     gameHistory.value.push(`Vinnare ${winningPlayer} (Poäng: ${playerScores.value[winningPlayer]})`);
     }else if (winner==='draw'){
-   message.value='Oavgjört!';
+   message.value='Oavgjortt!';
    gameHistory.value.push('Spelet slutade oavgjort!')
 }
 }
@@ -104,7 +105,6 @@ const restartGame = () => {
   winningSquares.value = [];
   message.value = `Du startar spelet, ${props.players[0].playerName}`;
 };
-
 </script>
 
 <template> 

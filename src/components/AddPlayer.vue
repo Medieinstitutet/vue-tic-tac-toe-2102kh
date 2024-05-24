@@ -4,105 +4,89 @@ import { ref } from 'vue';
 import { Player } from '../models/Player';
 
 const userInput = ref("");
-// const players = ref<Player[]>([]);
 const oPlayer = "O-SPELARE";
 const xPlayer = "X-SPELARE";
 
-defineProps<{players: Player[]}>();
+defineProps<{ players: Player[] }>();
 
 const emit = defineEmits<{
-  (e: "addPlayer", name: string): void;
+  (e: "add-player", name: string): void;
 }>();
 
 const handleSubmit = () => {
-  emit("addPlayer", userInput.value);
+  emit("add-player", userInput.value);
   userInput.value = "";
 };
 
 </script>
+
 <template>
   <div class="app">
     <section class="player-section">
       <h3 v-if="players.length == 0">Lägg till {{ xPlayer }}</h3>
       <h3 v-else-if="players.length < 2 && players.length > 0">Lägg till {{ oPlayer }}</h3>
-      
     </section>
     <form @submit.prevent="handleSubmit" class="player-form">
       <input type="text" v-model="userInput" placeholder="Vem ska spela?" class="input"/>
-      <!-- <label for="namn" /> -->
-
       <button class="save-button">Spara</button>
     </form>
     <span v-if="players.length > 0" class="player-list">
       <h3>Spelare:</h3>
       <ul>
-        <li v-for="player in players" 
-        :key="player.playerName"
-        class="player-item"
-        >
+        <li v-for="player in players" :key="player.playerName" class="player-item">
          <h3>{{ player.playerName }}</h3>  Poäng:<h4>{{ player.point }}</h4>  Tur:<h4>{{ player.turn ? 'Ja' : 'Nej' }}</h4>
        </li>
       </ul>
     </span>
-    
   </div>
-  </template>
+</template>
 
 <style scoped>
-.app{
+.app {
   background-color: rgb(253, 247, 238);
   padding: 100px 120px;
 }
-section{
-    text-align: center;
-    margin-bottom: 20px;
-    padding: 10px 25px;
-    background-color:rgb(247, 252, 180);;
+section {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 10px 25px;
+  background-color: rgb(247, 252, 180);
 }
-.player-form{
-    display: flex;
-    align-items: center;
-    gap:15px;
-    margin-bottom: 25px;
+.player-form {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
 }
-.input{
+.input {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 200px;
   font-size: 16px;
-
 }
-.player-item{
+.player-item {
   list-style: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.save-button{
-padding: 10px 20px;
-border: none;
-border-radius: 5px;
-background-color:#4CAF50;;
-color: white;
-font-size: 16px;
-cursor: pointer;
-transition: background-color 0.3s;
+.save-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 .save-button:hover {
- background-color: #45a049;
+  background-color: #45a049;
 }
+</style>
 
-</style>  
-
-
-
-
-
-
-
-
-
+    
 
 
 
