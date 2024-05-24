@@ -31,7 +31,7 @@ const handleSubmit = () => {
       <button class="save-button">Spara</button>
     </form>
     <span v-if="players.length > 0" class="player-list">
-      <h3>Spelare:</h3>
+      <h2>Spelare:</h2>
       <ul>
         <li v-for="player in players" :key="player.playerName" class="player-item">
          <h3>{{ player.playerName }}</h3>  Poäng:<h4>{{ player.point }}</h4>  Tur:<h4>{{ player.turn ? 'Ja' : 'Nej' }}</h4>
@@ -42,21 +42,27 @@ const handleSubmit = () => {
 </template>
 
 <style scoped>
-.app {
+ .app {
   background-color: rgb(253, 247, 238);
-  padding: 100px 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15%;
 }
 section {
   text-align: center;
   margin-bottom: 20px;
-  padding: 10px 25px;
-  background-color: rgb(247, 252, 180);
+
+ 
 }
 .player-form {
   display: flex;
   align-items: center;
-  gap: 15px;
+  justify-content: center;
+  gap: 18px;
   margin-bottom: 25px;
+  margin: 10px 35px;
 }
 .input {
   padding: 10px;
@@ -83,6 +89,14 @@ section {
 }
 .save-button:hover {
   background-color: #45a049;
+}
+h4{
+  margin: 10px;
+ 
+}
+h3{
+  margin-right: 10px;
+  color: rgb(87, 3, 3);
 }
 </style>
 

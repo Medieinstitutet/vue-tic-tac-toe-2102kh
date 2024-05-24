@@ -108,7 +108,7 @@ const restartGame = () => {
 </script>
 
 <template> 
-<div>
+<div class="app1">
 <h3>{{ message }}</h3>
 <div class="square">
       <div v-for="(value, i) in state.values"
@@ -125,15 +125,18 @@ const restartGame = () => {
 
 </template>
 <style scoped>
+
 .square{
-    min-width:90vw;
+    width:80vw;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 .square-item{
-min-width: 30%;
-min-height: 210px;
+width: 25%;
+min-height:100px;
 border:1px solid rgb(20, 1, 1);
 background-color: rgb(247, 252, 180);
 display:flex;
@@ -147,6 +150,16 @@ margin: 0.1rem;
 .square-item.winner {
 color:red
 }
+/* Media query for tablets */
+@media (max-width: 768px) {
+  .square-item {
+    width: 30vw;
+    height: 150px;
+    font-size: 4rem;
+  }
+}
+
+
 </style>
 
 

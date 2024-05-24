@@ -62,24 +62,27 @@ watch(gameHistory, (newHistory) => {
 </script>
 
 <template>
+  <div class="app0">
   <AddPlayer @add-player="addPlayer" :players="players" v-if="!showGame"/>
   <GameBoard :players="players" :gameHistory="gameHistory" v-else></GameBoard>
-
+<div class="buttons">
   <button v-if="!showGame" @click="startGame" class="start-button" :disabled="players.length !== 2">Börja spela spel</button>
   <button @click="resetGame" class="reset-button">Återställ spel</button>
+</div>
+</div>
 </template>
 
 <style scoped>
 .start-button,
 .reset-button {
-  padding: 10px 20px;
+  padding: 8px 20px;
   border: none;
   border-radius: 5px;
   color: white;
-  font-size: 16px;
+  font-size:1.2rem;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .start-button {
   background-color: #007BFF;
@@ -93,4 +96,12 @@ watch(gameHistory, (newHistory) => {
 .start-button:hover {
   background-color: #006FDD;
 }
+.buttons{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(253, 247, 238);
+  padding-bottom: 25px; 
+}
+
 </style>

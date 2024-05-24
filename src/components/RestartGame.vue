@@ -14,8 +14,8 @@ const restartGame =()=>{
 <style scoped>
 button {
   margin-top: 20px;
-  padding: 20px 35px;
-  font-size: 1.5rem;
+  padding: 10px 22px;
+  font-size: 1.2rem;
   background-color: #4CAF50;
   color: white;
   border: none;
