@@ -4,20 +4,16 @@ import { Player } from '../models/Player';
 import RestartGame from './RestartGame.vue';
 import GameHistory from './GameHistory.vue';
 
-
-
 defineEmits<{
-    (e:"play"):void;
+  (e:"play"):void;
 }>();
 
 interface GameProps{
-    players:Player[];
-    gameHistory:string[];
+  players:Player[];
+  gameHistory:string[];
     
 }
 const props = defineProps<GameProps>()
-    
-
 interface SquareProps {
     values:string[],
     currentPlayer:Player,
@@ -48,22 +44,21 @@ const winLines = [
 
 const handleClick = (index:number) => {
     if(state.value.values[index]=== "" && !state.value.gameOver){
-        if(state.value.currentPlayer === props.players[0]) {
+      if(state.value.currentPlayer === props.players[0]) {
      state.value.values[index]= "X";
      state.value.currentPlayer =props.players[1]
      message.value =`Nu är det ${props.players[1].playerName}s tur`;
-        }else{
-            state.value.values[index]= "O";
-            state.value.currentPlayer = props.players[0]
-            message.value =`Nu är det din tur, ${props.players[0].playerName}`;
-        }       
+      }else{
+      state.value.values[index]= "O";
+      state.value.currentPlayer = props.players[0]
+      message.value =`Nu är det din tur, ${props.players[0].playerName}`;
+      }       
     const winner = checkWinner();
     if(winner !==null){
     state.value.gameOver = true;
     handleGameOver(winner);   
-   
     }
-}
+  }
 }
 
 const checkWinner=()=>{
@@ -71,44 +66,43 @@ const checkWinner=()=>{
      const[a,b,c]=winLines[i];
      if(state.value.values[a] && 
      state.value.values[a] === state.value.values[b] &&
-      state.value.values[a]===state.value.values[c]){
-        winningSquares.value = [a, b, c];
-        return state.value.values[a]
+     state.value.values[a]===state.value.values[c]){
+     winningSquares.value = [a, b, c];
+     return state.value.values[a]
      }
     }
     if(!state.value.values.includes('')){
-        return 'draw';
+      return 'draw';
     }
-    return null;
+     return null;
 }
 
 const handleGameOver =(winner:string | null)=>{
     state.value.gameOver=true;
-    
     if(winner &&winner !='draw'){
     const winningPlayer=winner==='X' ? props.players[0].playerName : props.players[1].playerName;
     message.value=`Grattis! ${winningPlayer} vinner spelet!`;
     playerScores.value[winningPlayer]++;
     gameHistory.value.push(`Vinnare ${winningPlayer} (Poäng: ${playerScores.value[winningPlayer]})`);
     }else if (winner==='draw'){
-   message.value='Oavgjortt!';
-   gameHistory.value.push('Spelet slutade oavgjort!')
+    message.value='Oavgjortt!';
+    gameHistory.value.push('Spelet slutade oavgjort!')
 }
 }
 const restartGame = () => {
-  state.value = {
+   state.value = {
     values: ['', '', '', '', '', '', '', '', ''],
     currentPlayer: props.players[0],
     turn: true,
     gameOver: false
+   };
+   winningSquares.value = [];
+   message.value = `Du startar spelet, ${props.players[0].playerName}`;
   };
-  winningSquares.value = [];
-  message.value = `Du startar spelet, ${props.players[0].playerName}`;
-};
 </script>
 
 <template> 
-<div class="app1">
+<div class="app">
 <h3>{{ message }}</h3>
 <div class="square">
       <div v-for="(value, i) in state.values"
@@ -118,58 +112,47 @@ const restartGame = () => {
       >
       {{ value }}
     </div>
-</div>
+  </div>
 <RestartGame @restart="restartGame"/>
 <GameHistory :history="gameHistory"/>
 </div>
 
-</template>
-<style scoped>
 
-.square{
-    width:80vw;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+</template>
+
+<style scoped>
+.square {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 5px;
+  max-width: 350px;
+  margin: 20px auto;
 }
-.square-item{
-width: 25%;
-min-height:100px;
-border:1px solid rgb(20, 1, 1);
-background-color: rgb(247, 252, 180);
-display:flex;
-align-items: center;
-justify-content: center;
-font-size: 6rem;  
-color: blue;  
-border-radius: 5%;
-margin: 0.1rem;
+
+.square-item {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background-color:rgb(247, 252, 180);
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 4rem;
+  color: blue;
 }
+
 .square-item.winner {
-color:red
+  color: red;
 }
-/* Media query for tablets */
+
 @media (max-width: 768px) {
   .square-item {
-    width: 30vw;
-    height: 150px;
-    font-size: 4rem;
+    height: 80px;
+    font-size: 3rem;
   }
 }
-
-
 </style>
 
-
-
-
-
-
-
-
-
-      
-
-    

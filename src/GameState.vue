@@ -62,7 +62,7 @@ watch(gameHistory, (newHistory) => {
 </script>
 
 <template>
-  <div class="app0">
+  <div class="app">
   <AddPlayer @add-player="addPlayer" :players="players" v-if="!showGame"/>
   <GameBoard :players="players" :gameHistory="gameHistory" v-else></GameBoard>
 <div class="buttons">
@@ -73,35 +73,49 @@ watch(gameHistory, (newHistory) => {
 </template>
 
 <style scoped>
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 20px;
+  gap:15px;
+}
+
 .start-button,
 .reset-button {
-  padding: 8px 20px;
+  padding: 12px 23px;
   border: none;
   border-radius: 5px;
   color: white;
-  font-size:1.2rem;
+  font-size: 1.5rem;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-top: 15px;
 }
+
 .start-button {
   background-color: #007BFF;
 }
+
 .reset-button {
   background-color: #e71022;
 }
+
 .reset-button:hover {
   background-color: #E04E2F;
 }
+
 .start-button:hover {
   background-color: #006FDD;
 }
-.buttons{
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-color: rgb(253, 247, 238);
-  padding-bottom: 25px; 
-}
 
 </style>
+
+
